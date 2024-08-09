@@ -30,7 +30,7 @@ const loginController = async(req,res,next) => {
     const user = await userModel.findOne({email : req.body.email})
     if(!user) throw new APIError('User information is incorrect, please try again', 400)
 
-    if( (user.verificationAccount.verifiedAccount===true) && await bcrypt.compare(req.body.password, user.password)) {
+    if(await bcrypt.compare(req.body.password, user.password)) {
         await authMiddlewares.createToken(user,res)
        
         //await cache.createUserCache(user)  //added cache

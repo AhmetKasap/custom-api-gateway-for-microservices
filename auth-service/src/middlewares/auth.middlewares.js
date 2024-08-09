@@ -14,7 +14,6 @@ const createToken = async (user,res) => {
         const response = {
             user, token
         }
-        console.log(token)
         return new Response(token, "token created successfully, login successfully").ok(res)
     }
     else throw new APIError("An error occurred while creating the token", 500)

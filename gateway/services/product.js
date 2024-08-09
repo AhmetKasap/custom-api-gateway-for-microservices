@@ -1,7 +1,7 @@
 const { createProxyMiddleware } = require('http-proxy-middleware');
 
 const productProxy = createProxyMiddleware({
-    target: 'http://localhost:5001/api/v1',
+    target: 'http://localhost:5002/api/v1/product',
     changeOrigin: true,
     logger: console,
     on: {
