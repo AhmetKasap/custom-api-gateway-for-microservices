@@ -5,19 +5,6 @@ const authSchema = new mongoose.Schema({
     lastname : {type : String, trim : true, required : true},
     email : {type : String, trim : true, required : true, unique : true},
     password : {type : String, trim : true, required : true},
-    verificationAccount : {
-        verifiedAccount : {type : Boolean},
-        verificationCode : {type : String}
-    },
-    reset : {
-        code : {type : String, default : null},
-        time : {type : Date, default : null}
-    },
-    accountClosure : {
-        code : {type : String, default : null},
-        time : {type : Date, default : null}
-    }
-    
 })
 
 

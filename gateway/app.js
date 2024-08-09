@@ -4,7 +4,7 @@ const app = express()
 const { createProxyMiddleware } = require('http-proxy-middleware');
 
 
-const checkToken = require('./checkToken')
+const checkToken = require('./token/checkToken')
 
 const productProxy = createProxyMiddleware({
     target: 'http://localhost:5001/test',
