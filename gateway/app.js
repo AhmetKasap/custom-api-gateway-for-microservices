@@ -1,32 +1,18 @@
 const express = require('express')
 const app = express()
-
-const { createProxyMiddleware } = require('http-proxy-middleware');
-
-
 const checkToken = require('./token/checkToken')
 
-const productProxy = createProxyMiddleware({
-    target: 'http://localhost:5001/test',
-    changeOrigin: true,
-    logger: console,
-    on: {
-        proxyReq: (proxyReq, req, res) => {
-          //console.log(proxyReq)
-          console.log(req.userId)
-          proxyReq.setHeader('user-id', req.userId)
-        },
-        proxyRes: (proxyRes, req, res) => {
-          //console.log(proxyRes)
-        },
-        error: (err, req, res) => {
-            console.log(err)
-        },
-      },
+
+const productProxy = require('./services/product')
+app.use('/api-gateway/v1/product', checkToken, productProxy)
+
+
+const authProxy = require('./services/auth')
+app.use('/api-gateway/v1/auth/*', authProxy)
+
+
+
+app.listen(process.env.PORT || 5000, () => {
+  console.log(`Server is Running on port ${process.env.PORT || 5000}`)
 })
-
-app.use('/api', checkToken, productProxy);
-
-
-app.listen(5000)
 

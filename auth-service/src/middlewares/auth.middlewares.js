@@ -57,5 +57,5 @@ const checkToken = async (req,res,next) => {
 
 
 module.exports = {
-    createToken,checkToken,createTemporaryToken,decodedTemporaryToken
+    createToken
 }
