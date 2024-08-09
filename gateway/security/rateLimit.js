@@ -5,7 +5,7 @@ const rateLimit = require("express-rate-limit")
 const limiter = rateLimit({
     //skip: (req, res) => allowList.includes(req.ip),
 
-    limit :3,
+    limit :100,
     windowMs: 15 * 60 * 1000, //* 15 minutes
     message : "Too many requests, please try again later.",
     

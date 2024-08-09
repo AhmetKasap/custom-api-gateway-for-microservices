@@ -3,7 +3,7 @@ const APIError = require('../utils/Error')
 const Response = require('../utils/Response')
 const bcrypt = require('bcrypt')
 const authMiddlewares = require('../middlewares/auth.middlewares')
-const cache = require('../cache/Redis/user.cache')
+const cache = require('../cache/Redis/auth.cache')
 
 
 const registerController = async(req,res) => {
@@ -32,9 +32,12 @@ const loginController = async(req,res,next) => {
 
     if(await bcrypt.compare(req.body.password, user.password)) {
         await authMiddlewares.createToken(user,res)
-       
-        //await cache.createUserCache(user)  //added cache
-
+        const userForCache = {
+            id : user._id,
+            email : user.email
+        }
+            
+        await cache.addCache(userForCache)  //added cache
     }
    
 }
