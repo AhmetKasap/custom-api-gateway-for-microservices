@@ -20,8 +20,11 @@ const registerController = async(req,res) => {
         
     })
 
-    const response = await userDb.save()
-    if(response) return new Response(null, 'registration created successfully').created(res)
+    const user = await userDb.save()
+    if(user) {
+        await cache.addCache(user._id) //!added cache
+        return new Response(null, 'registration created successfully').created(res)
+    }
     else throw new APIError('An error occurred during registration', 500)
 }
 
@@ -32,12 +35,6 @@ const loginController = async(req,res,next) => {
 
     if(await bcrypt.compare(req.body.password, user.password)) {
         await authMiddlewares.createToken(user,res)
-        const userForCache = {
-            id : user._id,
-            email : user.email
-        }
-            
-        await cache.addCache(userForCache)  //added cache
     }
    
 }

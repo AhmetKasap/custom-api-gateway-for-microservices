@@ -4,11 +4,6 @@ const client = redis.createClient()
 client.connect() //redis connection
 
 
-const addCache = async (userId) => {
-
-    await client.sAdd("userIdList", userId, {'EX' : 432000})
-
-}
 
 const getCache = async (userId) => {
 
@@ -19,15 +14,9 @@ const getCache = async (userId) => {
 
 }
 
-const deleteCache = async (userId) => {
-
-    await client.sRem(userId)
-
-}
-
 
 
 
 module.exports = {
-    addCache, getCache, deleteCache
+    getCache
 }
